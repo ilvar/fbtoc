@@ -11,16 +11,18 @@
   </style>
 </head>
 <body>
-  <textarea id="result"></textarea>
+  <label>Character count threshold</label>
+  <input type="number" id="threshold" placeholder="Enter character count threshold here" value="500" />
   <button id="go">Generate</button>
+  <textarea id="result" placeholder="Result will appear here (markdown)"></textarea>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
   <script>
   function getPosts(username, next) {
-    FB.api(next || "/me/posts", "get", {limit: 300}, function(response) {
+    FB.api(next || "/me/posts", "get", {limit: 100}, function(response) {
       if (!response.error && response.data.length) {
         $result = $('#result');
-        posts = _.filter(response.data, function(p) { return p.message && p.message.length > 200 });
+        posts = _.filter(response.data, function(p) { return p.message && p.message.length > $("#threshold").val() });
         data = _.join(_.map(posts, function(p) {
           sentences = p.message.replace(/\n/g, " ").replace(/([.?!])\s*(?=[A-ZА-Я])/g, "$1|").split("|")
           header = sentences[0] + " _" + p.created_time.split("T")[0] + "_";
