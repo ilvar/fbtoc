@@ -31,7 +31,7 @@
             }
           });
           path = username + "/posts/" + p.id.split("_")[1];
-          return "[" + msg +"](https://www.facebook.com/" + path + ") rest"
+          return "* [" + msg +"](https://www.facebook.com/" + path + ") rest"
         }), '\n')
         $result.val($result.val() + data + "\n");
         setTimeout(function() {
