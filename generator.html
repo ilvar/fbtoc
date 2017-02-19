@@ -12,24 +12,23 @@
 </head>
 <body>
   <textarea id="result"></textarea>
-  <button onclick="getPosts()">Generate</button>
+  <button id="go">Generate</button>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
   <script>
-  function getPosts(next) {
-    username = "me";
+  function getPosts(username, next) {
     FB.api(next || "/me/posts", "get", {limit: 100}, function(response) {
       if (!response.error && response.data.length) {
         $result = $('#result');
         posts = _.filter(response.data, function(p) { return p.message && p.message.length > 200 });
         data = _.join(_.map(posts, function(p) {
-          msg = p.message.slice(0, 50) + "... _" + p.created_time + "_";
-          path = window.username + "/posts/" + p.id;
+          msg = p.message.slice(0, 75).replace("\n", " ") + "... _" + p.created_time.split("T")[0] + "_";
+          path = username + "/posts/" + p.id;
           return "[" + msg +"](https://www.facebook.com/" + path + ")"
         }), '\n')
-        $result.val($result.val() + data);
+        $result.val($result.val() + data + "\n");
         setTimeout(function() {
-          getPosts(response.paging.next);
+          getPosts(username, response.paging.next);
         }, 100);
       }
     });
@@ -41,7 +40,12 @@
       xfbml      : true,
       version    : 'v2.8'
     });
-    FB.login(function(response){ window.username = response.authResponse.userID }, {scope: 'user_posts'});
+
+    $("#go").click(function() {
+      FB.login(function(response){
+        getPosts(response.authResponse.userID);
+      }, {scope: 'user_posts'});
+    });
   };
 
   (function(d, s, id){
