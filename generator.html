@@ -35,7 +35,8 @@
           path = username + "/posts/" + p.id.split("_")[1];
           return "* [" + header +"](https://www.facebook.com/" + path + ") " + rest;
         }), '\n')
-        $result.val($result.val() + data + "\n");
+        newVal = $result.val() + "\n" + data + "\n"
+        $result.val(newVal.trim());
         setTimeout(function() {
           getPosts(username, response.paging.next);
         }, 100);
