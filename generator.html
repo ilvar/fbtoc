@@ -22,9 +22,16 @@
         $result = $('#result');
         posts = _.filter(response.data, function(p) { return p.message && p.message.length > 200 });
         data = _.join(_.map(posts, function(p) {
-          msg = p.message.slice(0, 75).replace("\n", " ") + "... _" + p.created_time.split("T")[0] + "_";
-          path = username + "/posts/" + p.id;
-          return "[" + msg +"](https://www.facebook.com/" + path + ")"
+          sentences = p.message.replace("\n", " ").replace(/([.?!])\s*(?=[A-Z])/g, "$1|").split("|")
+          header = sentences[0] + "... _" + p.created_time.split("T")[0] + "_";
+          rest = ""
+          sentences.slice(1).forEach(function(s) {
+            if (rest.length < 200) {
+              rest += s + " ";
+            }
+          });
+          path = username + "/posts/" + p.id.split("_")[1];
+          return "[" + msg +"](https://www.facebook.com/" + path + ") rest"
         }), '\n')
         $result.val($result.val() + data + "\n");
         setTimeout(function() {
