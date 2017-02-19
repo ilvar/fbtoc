@@ -23,7 +23,7 @@
         posts = _.filter(response.data, function(p) { return p.message && p.message.length > 200 });
         data = _.join(_.map(posts, function(p) {
           sentences = p.message.replace(/\n/g, " ").replace(/([.?!])\s*(?=[A-ZА-Я])/g, "$1|").split("|")
-          header = sentences[0] + "... _" + p.created_time.split("T")[0] + "_";
+          header = sentences[0] + " _" + p.created_time.split("T")[0] + "_";
           rest = ""
           sentences.slice(1).forEach(function(s) {
             if (rest.length < 200) {
