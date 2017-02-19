@@ -12,7 +12,7 @@
 </head>
 <body>
   <textarea id="result"></textarea>
-  <button onclick="getPosts()"></button>
+  <button onclick="getPosts()">Generate</button>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
   <script>
@@ -22,7 +22,7 @@
       if (!response.error && response.data.length) {
         $result = $('#result');
         posts = _.filter(response.data, function(p) { return p.story.length > 100 });
-        $result.value += _.join(_.map(posts, function(p) { return "["+p.story+"](https://www.facebook.com/"+username+"/posts/"+p.id+")" }), '\n');
+        $result.value += _.join(_.map(posts, function(p) { return "["+p.story+"](https://www.facebook.com/"+window.username+"/posts/"+p.id+")" }), '\n');
         setTimeout(function() {
           getPosts(response.pagination.next);
         }, 100);
@@ -36,7 +36,7 @@
       xfbml      : true,
       version    : 'v2.8'
     });
-    FB.login(function(response){ console.log(response) }, {scope: 'user_posts'});
+    FB.login(function(response){ window.username = response.authResponse.userID }, {scope: 'user_posts'});
   };
 
   (function(d, s, id){
