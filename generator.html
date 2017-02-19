@@ -22,7 +22,7 @@
         $result = $('#result');
         posts = _.filter(response.data, function(p) { return p.message && p.message.length > 200 });
         data = _.join(_.map(posts, function(p) {
-          sentences = p.message.replace("\n", " ").replace("\n", " ").replace("\n", " ").replace(/([.?!])\s*(?=[A-Z])/g, "$1|").split("|")
+          sentences = p.message.replace("\n", " ").replace("\n", " ").replace("\n", " ").replace(/([.?!])\s*(?=[A-ZА-Я])/g, "$1|").split("|")
           header = sentences[0] + "... _" + p.created_time.split("T")[0] + "_";
           rest = ""
           sentences.slice(1).forEach(function(s) {
@@ -31,7 +31,7 @@
             }
           });
           path = username + "/posts/" + p.id.split("_")[1];
-          return "* [" + header +"](https://www.facebook.com/" + path + ") rest"
+          return "* [" + header +"](https://www.facebook.com/" + path + ") " + rest;
         }), '\n')
         $result.val($result.val() + data + "\n");
         setTimeout(function() {
