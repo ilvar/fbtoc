@@ -22,9 +22,11 @@
       if (!response.error && response.data.length) {
         $result = $('#result');
         posts = _.filter(response.data, function(p) { return p.message && p.message.length > 200 });
-        msg = p.message.slice(0, 50) + "... _" + p.created_time + "_";
-        path = window.username + "/posts/" + p.id;
-        data = _.join(_.map(posts, function(p) { return "[" + msg +"](https://www.facebook.com/" + path + ")" }), '\n')
+        data = _.join(_.map(posts, function(p) {
+          msg = p.message.slice(0, 50) + "... _" + p.created_time + "_";
+          path = window.username + "/posts/" + p.id;
+          return "[" + msg +"](https://www.facebook.com/" + path + ")"
+        }), '\n')
         $result.val($result.val() + data);
         setTimeout(function() {
           getPosts(response.paging.next);
