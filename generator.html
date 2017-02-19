@@ -21,8 +21,8 @@
     FB.api(next || "/me/posts", "get", {limit: 100}, function(response) {
       if (!response.error && response.data.length) {
         $result = $('#result');
-        posts = _.filter(response.data, function(p) { return p.story.length > 100 });
-        $result.value += _.join(_.map(posts, function(p) { return "["+p.story+"](https://www.facebook.com/"+window.username+"/posts/"+p.id+")" }), '\n');
+        posts = _.filter(response.data, function(p) { return p.message && p.message.length > 100 });
+        $result.value += _.join(_.map(posts, function(p) { return "["+p.message+"](https://www.facebook.com/"+window.username+"/posts/"+p.id+")" }), '\n');
         setTimeout(function() {
           getPosts(response.pagination.next);
         }, 100);
