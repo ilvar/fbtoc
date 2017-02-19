@@ -17,7 +17,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
   <script>
   function getPosts(username, next) {
-    FB.api(next || "/me/posts", "get", {limit: 100}, function(response) {
+    FB.api(next || "/me/posts", "get", {limit: 300}, function(response) {
       if (!response.error && response.data.length) {
         $result = $('#result');
         posts = _.filter(response.data, function(p) { return p.message && p.message.length > 200 });
