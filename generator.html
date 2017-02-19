@@ -24,7 +24,7 @@
         posts = _.filter(response.data, function(p) { return p.message && p.message.length > 100 });
         $result.value += _.join(_.map(posts, function(p) { return "["+p.message+"](https://www.facebook.com/"+window.username+"/posts/"+p.id+")" }), '\n');
         setTimeout(function() {
-          getPosts(response.pagination.next);
+          getPosts(response.paging.next);
         }, 100);
       }
     });
