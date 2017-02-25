@@ -13,6 +13,16 @@
 <body>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
+
+  <div id="fb-root"></div>
+  <script>(function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v2.8&appId=1870833733194976";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));</script>
+
   <script>
   function getPosts(next) {
     FB.api(next || "/me/posts", "get", {limit: 100}, function(response) {
@@ -39,27 +49,30 @@
       }
     });
   }
+
+  FB.getLoginStatus(function(response) {
+    if (response.status == "connected") {
+      $('#fb_login').hide();
+      $('#generator').show();
+    } else {
+      $('#fb_login').show();
+      $('#generator').hide();
+    };
+  });
   </script>
 
-  <div id="fb-root"></div>
-  <script>(function(d, s, id) {
-    var js, fjs = d.getElementsByTagName(s)[0];
-    if (d.getElementById(id)) return;
-    js = d.createElement(s); js.id = id;
-    js.src = "//connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v2.8&appId=1870833733194976";
-    fjs.parentNode.insertBefore(js, fjs);
-  }(document, 'script', 'facebook-jssdk'));</script>
-
-  <label>Character count threshold</label>
-  <input type="number" id="threshold" placeholder="Enter character count threshold here" value="500" />
-
-  <div>
+  <div id="fb_login">
     Log in and generate:
-    <div class="fb-login-button" data-max-rows="1" data-size="medium" data-show-faces="false" data-auto-logout-link="false" onlogin="getPosts();" data-scope="user_posts"></div>
+    <div class="fb-login-button" data-max-rows="1" data-size="medium" data-show-faces="false" data-auto-logout-link="false" data-scope="user_posts"></div>
   </div>
 
-  <hr/>
+  <div id="generator">
+    <label>Character count threshold</label>
+    <input type="number" id="threshold" placeholder="Enter character count threshold here" value="500" />
 
-  <textarea id="result" placeholder="Result will appear here (markdown)"></textarea>
+    <hr/>
+
+    <textarea id="result" placeholder="Result will appear here (markdown)"></textarea>
+  </div>
 </body>
 </html>
