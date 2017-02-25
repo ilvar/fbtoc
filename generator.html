@@ -11,15 +11,6 @@
   </style>
 </head>
 <body>
-  <label>Character count threshold</label>
-  <input type="number" id="threshold" placeholder="Enter character count threshold here" value="500" />
-
-  <div>
-    Log in and generate:
-    <div class="fb-login-button" data-max-rows="1" data-size="medium" data-show-faces="false" data-auto-logout-link="false" onlogin="getPosts" data-scope="user_posts"></div>
-  </div>
-
-  <textarea id="result" placeholder="Result will appear here (markdown)"></textarea>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
   <script>
@@ -59,5 +50,14 @@
     fjs.parentNode.insertBefore(js, fjs);
   }(document, 'script', 'facebook-jssdk'));</script>
 
+  <label>Character count threshold</label>
+  <input type="number" id="threshold" placeholder="Enter character count threshold here" value="500" />
+
+  <div>
+    Log in and generate:
+    <div class="fb-login-button" data-max-rows="1" data-size="medium" data-show-faces="false" data-auto-logout-link="false" onlogin="getPosts" data-scope="user_posts"></div>
+  </div>
+
+  <textarea id="result" placeholder="Result will appear here (markdown)"></textarea>
 </body>
 </html>
