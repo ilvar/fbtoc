@@ -57,7 +57,7 @@
     });
   }
 
-  function checkLoginState() = {
+  function checkLoginState() {
     FB.getLoginStatus(function(response) {
       if (response.status == "connected") {
         $('#fb_login').hide();
